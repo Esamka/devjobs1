@@ -1,19 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useLocation } from "react-router-dom";
 import SearchFilter from "./SearchFilter";
+import ThemeContext from "../context/ThemeContext";
 
-const Header = ({
-  isDarkMode,
-  toggleDarkMode,
-  filter,
-  setFilter,
-  onFilter,
-}) => {
+const Header = () => {
+  const location = useLocation();
+  const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
+
   return (
     <header className="relative w-full bg-indigo-500 dark:bg-slate-900 overflow-hidden rounded-bl-3xl pb-1">
       <div className="container mx-auto flex items-start justify-between p-6 md:p-8 lg:p-10">
-        <h1 className="text-white text-3xl font-bold font-heading">devjobs</h1>
+        <h1 className="text-white text-3xl font-bold">devjobs</h1>
 
-        {/* Dark Mode Toggle */}
         <div className="flex items-center space-x-4">
           <span className="text-white">🌞</span>
           <div
@@ -28,19 +26,17 @@ const Header = ({
                   ? "translate-x-6 bg-indigo-500"
                   : "translate-x-0 bg-white"
               }`}
-            ></div>
+            />
           </div>
           <span className="text-white">🌙</span>
         </div>
       </div>
 
-      <div className="container mx-auto px-6 md:px-8 lg:px-10">
-        <SearchFilter
-          onFilter={onFilter}
-          filter={filter}
-          setFilter={setFilter}
-        />
-      </div>
+      {location.pathname === "/" && (
+        <div className="container mx-auto px-6 md:px-8 lg:px-10">
+          <SearchFilter />
+        </div>
+      )}
     </header>
   );
 };
